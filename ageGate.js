@@ -1,41 +1,25 @@
-// ============================================================
-// AGE GATE MODULE — verificación de edad
-// ============================================================
-
-const KEY = 'piña_age_verified';
-
-export function checkAge() {
-  const modal = document.getElementById('age-modal');
-  if (!modal) return;
-  if (localStorage.getItem(KEY) === 'true') {
-    modal.classList.add('hidden');
-  }
-  // Si no está verificado, el modal permanece visible (es el estado por defecto del HTML)
+/* ageGate.js */
+function checkAge() {
+    const isAdult = localStorage.getItem('isAdult');
+    if (!isAdult) {
+        const gate = document.createElement('div');
+        gate.id = 'age-gate';
+        gate.innerHTML = `
+            <div style="position:fixed; inset:0; background:#0a0f0b; z-index:9999; display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;">
+                <div style="background:#111a13; padding:40px; border-radius:20px; border:1px solid #4caf50;">
+                    <h2 style="font-family:'Fredoka',sans-serif; color:#fdd835; font-size:2rem; margin-bottom:10px;">¿Eres mayor de edad?</h2>
+                    <p style="color:#8cba91; margin-bottom:20px;">Debes tener más de 18 años para ingresar a Piña GrowShop.</p>
+                    <button onclick="confirmAge()" style="background:#4caf50; color:black; padding:10px 30px; border-radius:50px; font-weight:bold; cursor:pointer;">SÍ, SOY MAYOR</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(gate);
+    }
 }
 
-export function confirmAge() {
-  localStorage.setItem(KEY, 'true');
-  const modal = document.getElementById('age-modal');
-  if (modal) {
-    modal.style.animation = 'none';
-    modal.style.opacity = '0';
-    modal.style.transition = 'opacity 400ms';
-    setTimeout(() => modal.classList.add('hidden'), 400);
-  }
+function confirmAge() {
+    localStorage.setItem('isAdult', 'true');
+    document.getElementById('age-gate').remove();
 }
 
-export function denyAge() {
-  document.body.innerHTML = `
-    <div style="
-      display:flex; flex-direction:column; align-items:center; justify-content:center;
-      min-height:100vh; background:#080B08; color:#6B7A67;
-      font-family:'DM Sans',sans-serif; text-align:center; padding:40px;
-    ">
-      <p style="font-size:40px; margin-bottom:24px;">🌿</p>
-      <h1 style="font-size:24px; color:#EFF3EC; margin-bottom:12px;">Acceso restringido</h1>
-      <p style="font-size:15px; max-width:320px; line-height:1.7;">
-        Debes ser mayor de 18 años para acceder a este sitio.
-      </p>
-    </div>
-  `;
-}
+checkAge();
