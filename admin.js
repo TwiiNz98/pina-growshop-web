@@ -1,271 +1,179 @@
-// ============================================================
-// ADMIN.JS — lógica completa del panel de administración
-// ============================================================
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Piña GrowShop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="tokens.css">
+    <style>
+        :root { --pina-green: #4caf50; --pina-dark: #0a0f0b; }
+        body { background-color: var(--pina-dark); font-family: 'Inter', sans-serif; color: white; }
+        .pina-card { background: #111a13; border: 1px solid rgba(255,255,255,0.05); border-radius: 1.5rem; }
+        .sidebar-link.active { background: var(--pina-green); color: black; font-weight: bold; }
+        .product-row { display: grid; grid-template-columns: 50px 1fr 120px 150px; gap: 1rem; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.3s; }
+        .product-row:hover { background: rgba(255,255,255,0.02); }
+        input, select, textarea { background: #070c08 !important; border: 1px solid rgba(255,255,255,0.1) !important; color: white !important; border-radius: 0.75rem; padding: 0.75rem; outline: none; }
+        input:focus { border-color: var(--pina-green) !important; }
+    </style>
+</head>
+<body>
 
-const ADMIN_PASSWORD = 'pinaadmin2025';
-const SESSION_KEY    = 'piña_admin_session';
-const PRODUCTS_KEY   = 'piña_products';
-
-// ── Autenticación ────────────────────────────────────────────
-function adminLogin() {
-  const pass = document.getElementById('admin-pass').value;
-  if (pass === ADMIN_PASSWORD) {
-    sessionStorage.setItem(SESSION_KEY, 'true');
-    document.getElementById('login-screen').style.display  = 'none';
-    document.getElementById('admin-panel').style.display   = 'flex';
-    initAdmin();
-  } else {
-    document.getElementById('login-error').style.display = 'block';
-    document.getElementById('admin-pass').value = '';
-  }
-}
-
-function adminLogout() {
-  sessionStorage.removeItem(SESSION_KEY);
-  location.reload();
-}
-
-document.getElementById('admin-pass')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') adminLogin();
-});
-
-// Verificar sesión al cargar
-if (sessionStorage.getItem(SESSION_KEY) === 'true') {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('admin-panel').style.display  = 'flex';
-  initAdmin();
-}
-
-// ── Inicialización ───────────────────────────────────────────
-async function initAdmin() {
-  const products = await loadProducts();
-  updateStats(products);
-  renderProductTable(products);
-}
-
-async function loadProducts() {
-  // Primero localStorage, luego JSON estático
-  const stored = localStorage.getItem(PRODUCTS_KEY);
-  if (stored) {
-    try { return JSON.parse(stored); } catch {}
-  }
-  try {
-    const res = await fetch('../data/products.json');
-    const data = await res.json();
-    return data;
-  } catch {
-    return [];
-  }
-}
-
-function saveProducts(products) {
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
-}
-
-// ── Estadísticas ─────────────────────────────────────────────
-function updateStats(products) {
-  document.getElementById('stat-total').textContent    = products.length;
-  document.getElementById('stat-featured').textContent = products.filter(p => p.featured).length;
-  document.getElementById('stat-low').textContent      = products.filter(p => p.stock > 0 && p.stock <= 3).length;
-  document.getElementById('stat-nostock').textContent  = products.filter(p => p.stock === 0).length;
-}
-
-// ── Tabla de productos ───────────────────────────────────────
-const ICONS = { smoke:'🌿', cultivo:'🌱', tabaqueria:'🍃', aromas:'✨' };
-
-function renderProductTable(products) {
-  const container = document.getElementById('products-table');
-  if (!container) return;
-  if (products.length === 0) {
-    container.innerHTML = '<p style="color:var(--text-3);text-align:center;padding:40px;">No hay productos.</p>';
-    return;
-  }
-  container.innerHTML = products.map((p, idx) => `
-    <div class="product-row">
-      <div class="row-icon">${ICONS[p.category] || '📦'}</div>
-      <div class="row-info">
-        <div class="row-name">${escHtml(p.name)}</div>
-        <div class="row-meta">${p.category} · ${p.brand || 'Sin marca'} · Stock: ${p.stock} ${p.featured ? '· ⭐' : ''} ${p.new ? '· Nuevo' : ''}</div>
-      </div>
-      <div class="row-price">${formatCLP(p.price)}</div>
-      <div class="row-actions">
-        <button class="abtn abtn-outline abtn-sm" onclick="editProduct(${idx})">Editar</button>
-        <button class="abtn abtn-danger abtn-sm" onclick="deleteProduct(${idx})">Eliminar</button>
-      </div>
+    <div id="login-screen" class="fixed inset-0 z-[100] bg-black flex items-center justify-center p-4">
+        <div class="pina-card p-8 max-w-sm w-full text-center">
+            <h1 class="text-4xl mb-6">🍍</h1>
+            <h2 class="text-xl font-bold mb-4">Acceso Administración</h2>
+            <input type="password" id="admin-pass" placeholder="Contraseña" class="w-full mb-4 text-center">
+            <p id="login-error" class="text-red-500 text-xs mb-4 hidden">Contraseña incorrecta</p>
+            <button onclick="adminLogin()" class="w-full bg-primary text-black font-bold py-3 rounded-xl hover:bg-white transition-colors">Entrar</button>
+        </div>
     </div>
-  `).join('');
-}
 
-function filterAdminProducts(query) {
-  const cat = document.getElementById('admin-cat-filter').value;
-  loadProducts().then(products => {
-    let filtered = products;
-    if (cat !== 'all') filtered = filtered.filter(p => p.category === cat);
-    if (query.trim()) {
-      const q = query.toLowerCase();
-      filtered = filtered.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        (p.brand || '').toLowerCase().includes(q)
-      );
-    }
-    renderProductTable(filtered);
-  });
-}
+    <div id="admin-panel" class="hidden min-h-screen flex-col md:flex-row">
+        
+        <aside class="w-full md:w-64 bg-[#070c08] p-6 border-r border-white/5">
+            <h1 class="text-2xl font-['Fredoka'] text-primary mb-8">Piña Admin</h1>
+            <nav class="space-y-2">
+                <button onclick="showSection('dashboard')" class="sidebar-link active w-full text-left p-3 rounded-xl transition-all">📊 Dashboard</button>
+                <button onclick="showSection('products')" class="sidebar-link w-full text-left p-3 rounded-xl transition-all">📦 Inventario</button>
+                <button onclick="showSection('add'); clearForm()" class="sidebar-link w-full text-left p-3 rounded-xl transition-all">➕ Nuevo Producto</button>
+            </nav>
+            <div class="mt-10 pt-10 border-t border-white/5 space-y-4">
+                <button onclick="exportProducts()" class="text-xs text-gray-400 hover:text-white block w-full text-left">💾 Exportar JSON</button>
+                <button onclick="resetToDefault()" class="text-xs text-red-400 hover:text-red-300 block w-full text-left">🔄 Restaurar Base</button>
+                <button onclick="adminLogout()" class="text-xs text-gray-500 block w-full text-left mt-8">Cerrar Sesión</button>
+            </div>
+        </aside>
 
-// ── Secciones ────────────────────────────────────────────────
-function showSection(name) {
-  ['dashboard', 'products', 'add'].forEach(s => {
-    document.getElementById(`sec-${s}`).style.display = s === name ? 'block' : 'none';
-  });
-  document.querySelectorAll('.sidebar-link').forEach(l => {
-    l.classList.toggle('active', l.getAttribute('onclick')?.includes(name));
-  });
-  if (name === 'products') loadProducts().then(renderProductTable);
-  if (name === 'dashboard') loadProducts().then(p => { updateStats(p); });
-}
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+            
+            <section id="sec-dashboard">
+                <h2 class="text-3xl font-bold mb-8">Hola, Admin 👋</h2>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <div class="pina-card p-6 text-center">
+                        <span class="text-gray-400 text-xs block mb-1 uppercase tracking-widest">Total</span>
+                        <div id="stat-total" class="text-4xl font-bold">0</div>
+                    </div>
+                    <div class="pina-card p-6 text-center border-b-2 border-primary">
+                        <span class="text-gray-400 text-xs block mb-1 uppercase tracking-widest">Destacados</span>
+                        <div id="stat-featured" class="text-4xl font-bold text-primary">0</div>
+                    </div>
+                    <div class="pina-card p-6 text-center">
+                        <span class="text-gray-400 text-xs block mb-1 uppercase tracking-widest">Stock Bajo</span>
+                        <div id="stat-low" class="text-4xl font-bold text-yellow-500">0</div>
+                    </div>
+                    <div class="pina-card p-6 text-center">
+                        <span class="text-gray-400 text-xs block mb-1 uppercase tracking-widest">Agotados</span>
+                        <div id="stat-nostock" class="text-4xl font-bold text-red-500">0</div>
+                    </div>
+                </div>
+            </section>
 
-// ── Formulario ───────────────────────────────────────────────
-let _editingIndex = null;
+            <section id="sec-products" class="hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold">Inventario</h2>
+                    <div class="flex gap-4">
+                        <select id="admin-cat-filter" onchange="filterAdminProducts('')" class="text-sm">
+                            <option value="all">Todas las categorías</option>
+                            <option value="smoke">Smoke</option>
+                            <option value="cultivo">Cultivo</option>
+                            <option value="aromas">Aromas</option>
+                        </select>
+                        <input type="text" onkeyup="filterAdminProducts(this.value)" placeholder="Buscar producto..." class="text-sm">
+                    </div>
+                </div>
+                <div id="products-table" class="pina-card overflow-hidden">
+                    </div>
+            </section>
 
-function autoSlug() {
-  const nameVal = document.getElementById('f-name').value;
-  const slug = nameVal
-    .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/[\s_]+/g, '-');
-  document.getElementById('f-id').value = slug;
-}
+            <section id="sec-add" class="hidden max-w-3xl">
+                <h2 id="form-title" class="text-2xl font-bold mb-8">Agregar producto</h2>
+                <div class="pina-card p-8 space-y-6">
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">Nombre Comercial</label>
+                            <input type="text" id="f-name" onkeyup="autoSlug()" placeholder="Ej: Bong de Vidrio XL">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">ID Único (Slug)</label>
+                            <input type="text" id="f-id" placeholder="ej-bong-xl">
+                        </div>
+                    </div>
 
-function clearForm() {
-  _editingIndex = null;
-  document.getElementById('form-title').textContent = 'Agregar producto';
-  ['name','id','desc','longdesc','price','compare','category','brand','image','tags'].forEach(f => {
-    document.getElementById(`f-${f}`).value = '';
-  });
-  document.getElementById('f-stock').value   = '0';
-  document.getElementById('f-featured').checked = false;
-  document.getElementById('f-new').checked      = false;
-  document.getElementById('form-error').style.display = 'none';
-}
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-400 mb-2 uppercase">Descripción Corta (Cards)</label>
+                        <input type="text" id="f-desc" placeholder="Resumen rápido para el catálogo">
+                    </div>
 
-async function editProduct(idx) {
-  const products = await loadProducts();
-  const p = products[idx];
-  if (!p) return;
-  _editingIndex = idx;
-  document.getElementById('form-title').textContent = 'Editar producto';
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-400 mb-2 uppercase">Descripción Larga</label>
+                        <textarea id="f-longdesc" rows="3" placeholder="Detalles técnicos, materiales, etc."></textarea>
+                    </div>
 
-  document.getElementById('f-name').value     = p.name || '';
-  document.getElementById('f-id').value       = p.id || '';
-  document.getElementById('f-desc').value     = p.description || '';
-  document.getElementById('f-longdesc').value = p.longDesc || '';
-  document.getElementById('f-price').value    = p.price || '';
-  document.getElementById('f-compare').value  = p.comparePrice || '';
-  document.getElementById('f-category').value = p.category || '';
-  document.getElementById('f-brand').value    = p.brand || '';
-  document.getElementById('f-image').value    = p.image || '';
-  document.getElementById('f-stock').value    = p.stock ?? 0;
-  document.getElementById('f-tags').value     = (p.tags || []).join(', ');
-  document.getElementById('f-featured').checked = !!p.featured;
-  document.getElementById('f-new').checked      = !!p.new;
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">Precio ($)</label>
+                            <input type="number" id="f-price" placeholder="24990">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">Precio Oferta (Opcional)</label>
+                            <input type="number" id="f-compare" placeholder="34990">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">Stock</label>
+                            <input type="number" id="f-stock" value="0">
+                        </div>
+                    </div>
 
-  showSection('add');
-}
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">Categoría</label>
+                            <select id="f-category">
+                                <option value="smoke">Smoke</option>
+                                <option value="cultivo">Cultivo</option>
+                                <option value="tabaqueria">Tabaquería</option>
+                                <option value="aromas">Aromas</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-xs text-gray-400 mb-2 uppercase">Marca</label>
+                            <input type="text" id="f-brand" placeholder="Ej: Raw, BioBizz">
+                        </div>
+                    </div>
 
-async function saveProduct() {
-  const errorEl = document.getElementById('form-error');
-  errorEl.style.display = 'none';
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-400 mb-2 uppercase">Ruta Imagen</label>
+                        <input type="text" id="f-image" placeholder="img/producto.jpg">
+                    </div>
 
-  const name     = document.getElementById('f-name').value.trim();
-  const id       = document.getElementById('f-id').value.trim();
-  const desc     = document.getElementById('f-desc').value.trim();
-  const price    = parseFloat(document.getElementById('f-price').value);
-  const category = document.getElementById('f-category').value;
+                    <div class="flex flex-col">
+                        <label class="text-xs text-gray-400 mb-2 uppercase">Tags (separados por coma)</label>
+                        <input type="text" id="f-tags" placeholder="vidrio, XL, pro">
+                    </div>
 
-  // Validación
-  if (!name || !id || !desc || !category || isNaN(price) || price <= 0) {
-    errorEl.textContent = '⚠️ Nombre, ID, descripción, categoría y precio son obligatorios.';
-    errorEl.style.display = 'block';
-    return;
-  }
+                    <div class="flex gap-8 py-4 border-y border-white/5">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="f-featured" class="w-5 h-5 accent-primary">
+                            <span>Destacar en Home (⭐)</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="f-new" class="w-5 h-5 accent-primary">
+                            <span>Marcar como Nuevo</span>
+                        </label>
+                    </div>
 
-  const product = {
-    id,
-    name,
-    slug:         id,
-    description:  desc,
-    longDesc:     document.getElementById('f-longdesc').value.trim(),
-    price,
-    comparePrice: parseFloat(document.getElementById('f-compare').value) || null,
-    category,
-    brand:        document.getElementById('f-brand').value.trim(),
-    image:        document.getElementById('f-image').value.trim(),
-    stock:        parseInt(document.getElementById('f-stock').value) || 0,
-    tags:         document.getElementById('f-tags').value.split(',').map(t => t.trim()).filter(Boolean),
-    featured:     document.getElementById('f-featured').checked,
-    new:          document.getElementById('f-new').checked
-  };
+                    <div id="form-error" class="text-red-500 text-sm hidden"></div>
 
-  const products = await loadProducts();
+                    <div class="flex gap-4">
+                        <button onclick="saveProduct()" class="flex-1 bg-primary text-black font-bold py-4 rounded-2xl hover:bg-white transition-all">Guardar Cambios</button>
+                        <button onclick="showSection('products')" class="px-8 bg-white/5 rounded-2xl">Cancelar</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-  if (_editingIndex !== null) {
-    products[_editingIndex] = product;
-  } else {
-    // Verificar ID duplicado
-    if (products.find(p => p.id === id)) {
-      errorEl.textContent = '⚠️ Ya existe un producto con ese ID. Cambia el ID o edita el existente.';
-      errorEl.style.display = 'block';
-      return;
-    }
-    products.push(product);
-  }
-
-  saveProducts(products);
-  clearForm();
-  showSection('dashboard');
-  updateStats(products);
-  alert(`✅ Producto "${product.name}" guardado. La tienda se actualizará automáticamente.`);
-}
-
-async function deleteProduct(idx) {
-  if (!confirm('¿Eliminar este producto? Esta acción no se puede deshacer.')) return;
-  const products = await loadProducts();
-  const name = products[idx]?.name || 'Producto';
-  products.splice(idx, 1);
-  saveProducts(products);
-  renderProductTable(products);
-  updateStats(products);
-}
-
-// ── Exportar / Restaurar ─────────────────────────────────────
-async function exportProducts() {
-  const products = await loadProducts();
-  const blob = new Blob([JSON.stringify(products, null, 2)], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'products.json';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-async function resetToDefault() {
-  if (!confirm('¿Restaurar los productos del archivo original? Se perderán todos los cambios del admin.')) return;
-  localStorage.removeItem(PRODUCTS_KEY);
-  const products = await loadProducts();
-  updateStats(products);
-  renderProductTable(products);
-  alert('✅ Productos restaurados desde el archivo original.');
-}
-
-// ── Helpers ──────────────────────────────────────────────────
-function formatCLP(n) {
-  return new Intl.NumberFormat('es-CL', { style:'currency', currency:'CLP', minimumFractionDigits:0 }).format(n);
-}
-function escHtml(str) {
-  const d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
-}
+    <script src="admin.js"></script>
+</body>
+</html>
