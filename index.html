@@ -2,141 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piña GrowShop | Catálogo Oficial</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="tokens.css">
-    <link rel="stylesheet" href="layout.css">
-    
+    <title>Piña GrowShop</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#4caf50',
-                        secondary: '#fdd835',
-                        dark: '#0a0f0b',
-                        card: '#111a13'
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="layout.css">
 </head>
-
-<body class="bg-dark text-white font-['Inter'] antialiased">
-
-    <div class="fixed inset-0 overflow-hidden -z-10 opacity-20 pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-primary rounded-full blur-[130px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary rounded-full blur-[110px]"></div>
-    </div>
-
-    <header class="sticky top-0 z-50 backdrop-blur-xl bg-dark/70 border-b border-white/5">
-        <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-            <h1 class="text-2xl font-['Fredoka'] font-bold text-primary tracking-tight">🍍 Piña Grow</h1>
-            
-            <nav class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-gray-400">
-                <a href="#catalogo" class="hover:text-primary transition-colors">CATÁLOGO</a>
-                <a href="#nosotros" class="hover:text-primary transition-colors">NOSOTROS</a>
-                <a href="admin.html" class="opacity-50 hover:opacity-100">ADMIN</a>
-            </nav>
-
-            <a href="https://wa.me/56945802810" class="bg-primary text-black px-5 py-2.5 rounded-full font-bold text-xs shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
-                CONTACTO
-            </a>
+<body class="bg-[#0a0f0b] text-white">
+    <header class="p-6 border-b border-white/5 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-primary">🍍 Piña Grow</h1>
+            <div class="flex gap-4">
+                <input type="text" id="search" placeholder="Buscar..." class="bg-white/5 border border-white/10 rounded-full px-4 py-1 text-sm outline-none focus:border-primary">
+                <a href="admin.html" class="opacity-20 hover:opacity-100 transition-opacity">⚙️</a>
+            </div>
         </div>
     </header>
 
-    <section class="pt-20 pb-10 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-5xl md:text-7xl font-['Fredoka'] font-bold mb-6">Tu cosecha, <br><span class="text-secondary">nuestra pasión.</span></h2>
-            <p class="text-gray-400 max-w-xl mx-auto mb-10">Explora nuestro inventario actualizado de parafernalia, nutrición y accesorios para el cultivador moderno.</p>
-        </div>
-    </section>
-
-    <section id="catalogo" class="max-w-7xl mx-auto px-4 py-12">
-        
-        <div class="flex flex-col md:flex-row gap-6 justify-between items-center mb-12 bg-card/50 p-6 rounded-[2rem] border border-white/5 shadow-2xl">
-            <div class="flex flex-wrap justify-center gap-2" id="filter-buttons">
-                <button onclick="filterBy('all')" class="cat-btn active bg-primary text-black px-6 py-2.5 rounded-full text-xs font-bold transition-all">TODOS</button>
-                <button onclick="filterBy('smoke')" class="cat-btn bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-full text-xs font-bold transition-all">SMOKE</button>
-                <button onclick="filterBy('cultivo')" class="cat-btn bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-full text-xs font-bold transition-all">CULTIVO</button>
-                <button onclick="filterBy('aromas')" class="cat-btn bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-full text-xs font-bold transition-all">AROMAS</button>
-            </div>
-            
-            <div class="relative w-full md:w-72">
-                <input type="text" id="user-search" onkeyup="searchHandler(this.value)" placeholder="Buscar producto..." 
-                    class="w-full bg-black/40 border border-white/10 rounded-2xl py-3 px-5 text-sm outline-none focus:border-primary transition-all">
-            </div>
+    <main class="max-w-7xl mx-auto p-6">
+        <div class="flex gap-2 mb-10 overflow-x-auto pb-4">
+            <button onclick="filter('all')" class="bg-primary text-black px-6 py-2 rounded-full font-bold text-xs">TODO</button>
+            <button onclick="filter('smoke')" class="bg-white/5 px-6 py-2 rounded-full font-bold text-xs">SMOKE</button>
+            <button onclick="filter('cultivo')" class="bg-white/5 px-6 py-2 rounded-full font-bold text-xs">CULTIVO</button>
         </div>
 
-        <div class="flex justify-between items-center mb-6 px-2">
-            <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Mostrando: <span id="items-count" class="text-primary">0</span> productos</span>
-        </div>
-
-        <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <div class="col-span-full py-20 text-center text-gray-500 italic">Cargando catálogo oficial...</div>
-        </div>
-    </section>
-
-    <footer class="border-t border-white/5 py-16 mt-20 bg-black/20">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
-            <div class="text-3xl font-['Fredoka'] font-bold text-white mb-4">🍍 Piña GrowShop</div>
-            <p class="text-gray-500 text-sm mb-8 text-center max-w-md">San Marcos 1801, Padre Hurtado. <br> Calidad premium en cada detalle para tu cultivo.</p>
-            <div class="flex gap-6 mb-10">
-                <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-primary transition-colors text-xl">📸</a>
-                <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-primary transition-colors text-xl">📘</a>
-            </div>
-            <p class="text-[10px] text-gray-700 uppercase tracking-[0.3em]">© 2026 Piña GrowShop · Chile</p>
-        </div>
-    </footer>
+        <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </main>
 
     <script type="module">
         import { fetchProducts, renderProducts } from './products.js';
+        let items = [];
 
-        let allProducts = [];
-
-        async function init() {
-            allProducts = await fetchProducts();
-            updateGrid(allProducts);
+        async function start() {
+            items = await fetchProducts();
+            renderProducts(items, 'grid');
         }
 
-        function updateGrid(list) {
-            renderProducts(list, 'productos-grid');
-            document.getElementById('items-count').textContent = list.length;
-        }
-
-        // Exponer funciones al window para los onclick del HTML
-        window.filterBy = (cat) => {
-            // Actualizar botones UI
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-black');
-                btn.classList.add('bg-white/5', 'text-white');
-            });
-            event.target.classList.add('bg-primary', 'text-black');
-            event.target.classList.remove('bg-white/5', 'text-white');
-
-            if(cat === 'all') {
-                updateGrid(allProducts);
-            } else {
-                const filtered = allProducts.filter(p => p.category === cat);
-                updateGrid(filtered);
-            }
+        window.filter = (c) => {
+            const filtered = c === 'all' ? items : items.filter(p => p.category === c);
+            renderProducts(filtered, 'grid');
         };
 
-        window.searchHandler = (query) => {
-            const q = query.toLowerCase();
-            const filtered = allProducts.filter(p => 
-                p.name.toLowerCase().includes(q) || 
-                p.category.toLowerCase().includes(q)
-            );
-            updateGrid(filtered);
+        document.getElementById('search').oninput = (e) => {
+            const q = e.target.value.toLowerCase();
+            const filtered = items.filter(p => p.name.toLowerCase().includes(q));
+            renderProducts(filtered, 'grid');
         };
 
-        init();
+        start();
     </script>
 </body>
 </html>
