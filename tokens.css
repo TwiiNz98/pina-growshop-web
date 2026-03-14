@@ -1,0 +1,75 @@
+/* ============================================================
+   TOKENS — Piña GrowShop
+   Variables globales: colores, tipografía, espaciado, radios
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Colores base */
+  --bg-0:       #080B08;
+  --bg-1:       #0F130F;
+  --bg-2:       #161B16;
+  --bg-3:       #1E251E;
+  --bg-4:       #252E25;
+
+  /* Acento principal — verde cítrico */
+  --accent:       #7EE63B;
+  --accent-dim:   #5BB826;
+  --accent-glow:  rgba(126,230,59,0.15);
+  --accent-text:  #0F130F;
+
+  /* Acento secundario — dorado */
+  --gold:         #F0B429;
+  --gold-dim:     #C9941A;
+
+  /* Texto */
+  --text-1:  #EFF3EC;
+  --text-2:  #A8B4A5;
+  --text-3:  #6B7A67;
+  --text-inv: #0F130F;
+
+  /* Bordes */
+  --border-1: rgba(126,230,59,0.12);
+  --border-2: rgba(126,230,59,0.22);
+  --border-3: rgba(255,255,255,0.06);
+
+  /* Tipografía */
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  /* Espaciado */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* Radios */
+  --r-sm:  6px;
+  --r-md:  10px;
+  --r-lg:  16px;
+  --r-xl:  24px;
+  --r-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.6);
+  --shadow-accent: 0 0 24px rgba(126,230,59,0.2);
+
+  /* Transiciones */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast:   150ms var(--ease);
+  --t-normal: 280ms var(--ease);
+  --t-slow:   500ms var(--ease);
+
+  /* Layout */
+  --max-w:     1280px;
+  --header-h:  68px;
+}

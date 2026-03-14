@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Piña GrowShop</title>
+  <link rel="stylesheet" href="../public/css/tokens.css">
+  <link rel="stylesheet" href="admin.css">
+  <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-logo">🌿</div>
+      <h1>Panel Admin</h1>
+      <p>Piña GrowShop</p>
+      <div class="form-group">
+        <label for="admin-pass">Contraseña</label>
+        <input type="password" id="admin-pass" placeholder="Ingresa la contraseña" autocomplete="current-password">
+      </div>
+      <div id="login-error" class="error-msg" style="display:none">Contraseña incorrecta</div>
+      <button class="abtn abtn-primary abtn-full" onclick="adminLogin()">Entrar</button>
+    </div>
+  </div>
+
+  <!-- PANEL PRINCIPAL -->
+  <div id="admin-panel" style="display:none">
+
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span>🌿</span>
+        <span>Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-link active" onclick="showSection('dashboard')">📊 Dashboard</a>
+        <a href="#" class="sidebar-link" onclick="showSection('products')">📦 Productos</a>
+        <a href="#" class="sidebar-link" onclick="showSection('add')">➕ Agregar</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-link">← Ver tienda</a>
+        <button class="abtn abtn-ghost" onclick="adminLogout()">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+
+      <!-- DASHBOARD -->
+      <section id="sec-dashboard" class="admin-section">
+        <h2>Dashboard</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-info">
+              <div class="stat-number" id="stat-total">0</div>
+              <div class="stat-label">Productos totales</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <div class="stat-info">
+              <div class="stat-number" id="stat-featured">0</div>
+              <div class="stat-label">Destacados</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚠️</div>
+            <div class="stat-info">
+              <div class="stat-number" id="stat-low">0</div>
+              <div class="stat-label">Stock bajo (≤3)</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">❌</div>
+            <div class="stat-info">
+              <div class="stat-number" id="stat-nostock">0</div>
+              <div class="stat-label">Sin stock</div>
+            </div>
+          </div>
+        </div>
+        <div class="admin-card" style="margin-top:24px;">
+          <h3>Acciones rápidas</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
+            <button class="abtn abtn-primary" onclick="showSection('add')">➕ Nuevo producto</button>
+            <button class="abtn abtn-outline" onclick="exportProducts()">⬇️ Exportar JSON</button>
+            <button class="abtn abtn-danger" onclick="resetToDefault()">🔄 Restaurar productos por defecto</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- LISTA DE PRODUCTOS -->
+      <section id="sec-products" class="admin-section" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+          <h2>Productos</h2>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <input type="search" id="admin-search" placeholder="Buscar..." class="ainput" style="width:200px;" oninput="filterAdminProducts(this.value)">
+            <select id="admin-cat-filter" class="ainput" onchange="filterAdminProducts(document.getElementById('admin-search').value)">
+              <option value="all">Todas las categorías</option>
+              <option value="smoke">Smoke</option>
+              <option value="cultivo">Cultivo</option>
+              <option value="tabaqueria">Tabaquería</option>
+              <option value="aromas">Aromas</option>
+            </select>
+          </div>
+        </div>
+        <div id="products-table"><!-- Renderizado por JS --></div>
+      </section>
+
+      <!-- AGREGAR / EDITAR PRODUCTO -->
+      <section id="sec-add" class="admin-section" style="display:none">
+        <h2 id="form-title">Agregar producto</h2>
+        <div class="admin-card" style="margin-top:24px;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre *</label>
+              <input type="text" id="f-name" class="ainput" placeholder="Nombre del producto" oninput="autoSlug()">
+            </div>
+            <div class="form-group">
+              <label>ID / Slug *</label>
+              <input type="text" id="f-id" class="ainput" placeholder="bong-vidrio-colores">
+              <small>Se genera automáticamente. Solo letras, números y guiones.</small>
+            </div>
+            <div class="form-group form-full">
+              <label>Descripción corta *</label>
+              <input type="text" id="f-desc" class="ainput" placeholder="Descripción breve para la tarjeta">
+            </div>
+            <div class="form-group form-full">
+              <label>Descripción larga</label>
+              <textarea id="f-longdesc" class="ainput" rows="3" placeholder="Descripción detallada del producto"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Precio CLP *</label>
+              <input type="number" id="f-price" class="ainput" placeholder="12990" min="0">
+            </div>
+            <div class="form-group">
+              <label>Precio comparativo (tachado)</label>
+              <input type="number" id="f-compare" class="ainput" placeholder="Dejar vacío si no aplica" min="0">
+            </div>
+            <div class="form-group">
+              <label>Categoría *</label>
+              <select id="f-category" class="ainput">
+                <option value="">Seleccionar...</option>
+                <option value="smoke">Smoke</option>
+                <option value="cultivo">Cultivo</option>
+                <option value="tabaqueria">Tabaquería</option>
+                <option value="aromas">Aromas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Marca</label>
+              <input type="text" id="f-brand" class="ainput" placeholder="Nombre de la marca">
+            </div>
+            <div class="form-group">
+              <label>URL de imagen</label>
+              <input type="url" id="f-image" class="ainput" placeholder="https://... (dejar vacío por ahora)">
+            </div>
+            <div class="form-group">
+              <label>Stock</label>
+              <input type="number" id="f-stock" class="ainput" placeholder="10" min="0" value="0">
+            </div>
+            <div class="form-group">
+              <label>Tags (separados por coma)</label>
+              <input type="text" id="f-tags" class="ainput" placeholder="bong, vidrio, colores">
+            </div>
+            <div class="form-group" style="display:flex;gap:24px;align-items:center;">
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" id="f-featured"> Destacado
+              </label>
+              <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                <input type="checkbox" id="f-new"> Nuevo
+              </label>
+            </div>
+          </div>
+
+          <div id="form-error" class="error-msg" style="display:none;margin-top:16px;"></div>
+
+          <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
+            <button class="abtn abtn-primary" onclick="saveProduct()">💾 Guardar producto</button>
+            <button class="abtn abtn-outline" onclick="clearForm()">✕ Cancelar</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

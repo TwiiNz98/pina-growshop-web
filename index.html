@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Piña GrowShop | Smoke, Cultivo y Aromas en Padre Hurtado</title>
+  <meta name="description" content="Tienda de growshop en Padre Hurtado. Bongs, pipas, semillas, fertilizantes, inciensos y accesorios premium. Contáctanos por WhatsApp.">
+  <meta name="keywords" content="growshop chile, growshop padre hurtado, bongs chile, cultivo, tabaqueria, aromas, inciensos">
+  <meta name="author" content="Centro Digital Express">
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website">
+  <meta property="og:title"       content="Piña GrowShop | Padre Hurtado">
+  <meta property="og:description" content="Todo lo que necesitas para crecer. Smoke, Cultivo, Tabaquería y Aromas.">
+  <meta property="og:locale"      content="es_CL">
+
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Piña GrowShop",
+    "description": "Growshop en Padre Hurtado. Smoke, cultivo, tabaquería y aromas.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "San Marcos 1801",
+      "addressLocality": "Padre Hurtado",
+      "addressCountry": "CL"
+    },
+    "telephone": "+56945802810",
+    "sameAs": ["https://www.facebook.com/PinaGrowShop"]
+  }
+  </script>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="public/css/tokens.css">
+  <link rel="stylesheet" href="public/css/layout.css">
+  <link rel="stylesheet" href="public/css/components.css">
+  <link rel="stylesheet" href="public/css/store.css">
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODAL VERIFICACIÓN DE EDAD
+  ══════════════════════════════════════════════════════ -->
+  <div id="age-modal" role="dialog" aria-modal="true" aria-labelledby="age-title">
+    <div class="age-card">
+      <div class="age-icon">🌿</div>
+      <h2 id="age-title">¿Tienes 18 años o más?</h2>
+      <p>Este sitio contiene productos para adultos. Al ingresar confirmas que eres mayor de 18 años y que el consumo de estos productos es legal en tu región.</p>
+      <div class="age-actions">
+        <button class="btn btn-outline btn-full" onclick="denyAge()">No, soy menor</button>
+        <button class="btn btn-primary btn-full" onclick="confirmAge()">Sí, soy mayor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════════ -->
+  <header id="header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+
+        <a href="#hero" class="header-logo" aria-label="Piña GrowShop - Inicio">
+          <div class="logo-mark" aria-hidden="true">🌿</div>
+          <span class="logo-text">Piña<span>Grow</span></span>
+        </a>
+
+        <nav class="header-nav" aria-label="Navegación principal">
+          <a href="#hero">Inicio</a>
+          <a href="#categories">Categorías</a>
+          <a href="#products">Productos</a>
+          <a href="#brands">Marcas</a>
+          <a href="#about">Nosotros</a>
+          <a href="#contact">Contacto</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="btn btn-primary btn-sm" onclick="openWhatsApp()" aria-label="Contactar por WhatsApp">
+            WhatsApp
+          </button>
+          <div class="cart-btn-wrap">
+            <button id="cart-btn" class="btn btn-icon btn-outline" aria-label="Abrir carrito">
+              🛒
+            </button>
+            <span id="cart-badge" aria-live="polite" aria-label="Ítems en carrito">0</span>
+          </div>
+          <button id="hamburger" class="hamburger" aria-label="Menú" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Menú mobile -->
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Menú móvil">
+    <a href="#hero">🏠 Inicio</a>
+    <a href="#categories">🗂 Categorías</a>
+    <a href="#products">📦 Productos</a>
+    <a href="#brands">🏷 Marcas</a>
+    <a href="#about">ℹ️ Nosotros</a>
+    <a href="#contact">📞 Contacto</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN
+  ══════════════════════════════════════════════════════ -->
+  <main id="main">
+
+    <!-- ── HERO ── -->
+    <section id="hero" aria-label="Bienvenida">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-grid-pattern" aria-hidden="true"></div>
+      <div class="container">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Growshop · Padre Hurtado</p>
+          <h1 class="hero-title">
+            Todo lo que<br>
+            necesitas para<br>
+            <em>crecer</em>
+          </h1>
+          <p class="hero-subtitle">
+            Smoke, Cultivo, Tabaquería y Aromas. Productos seleccionados con calidad garantizada para tu experiencia.
+          </p>
+          <div class="hero-actions">
+            <a href="#products" class="btn btn-primary btn-lg">Ver productos</a>
+            <button class="btn btn-outline btn-lg" onclick="openWhatsApp()">Consultar por WhatsApp</button>
+          </div>
+          <div class="hero-stats" role="list">
+            <div class="stat-item" role="listitem">
+              <div class="stat-num">4<span>+</span></div>
+              <div class="stat-label">Categorías</div>
+            </div>
+            <div class="stat-item" role="listitem">
+              <div class="stat-num">100<span>+</span></div>
+              <div class="stat-label">Productos</div>
+            </div>
+            <div class="stat-item" role="listitem">
+              <div class="stat-num">Padre<span> H.</span></div>
+              <div class="stat-label">San Marcos 1801</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CATEGORÍAS ── -->
+    <section id="categories" class="section" aria-labelledby="cat-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="cat-title">Explora por categoría</h2>
+          <p>Encuentra exactamente lo que buscas en nuestras secciones especializadas.</p>
+        </div>
+        <div class="categories-grid">
+          <div class="category-card reveal" data-cat="smoke" tabindex="0" role="button" aria-label="Ver categoría Smoke">
+            <div class="category-icon">🌿</div>
+            <div class="category-name">Smoke</div>
+            <div class="category-desc">Bongs, pipas, papeles y todo para disfrutar</div>
+            <div class="category-link">Ver productos →</div>
+          </div>
+          <div class="category-card reveal" data-cat="cultivo" tabindex="0" role="button" aria-label="Ver categoría Cultivo">
+            <div class="category-icon">🌱</div>
+            <div class="category-name">Cultivo</div>
+            <div class="category-desc">Semillas, sustratos, fertilizantes y más</div>
+            <div class="category-link">Ver productos →</div>
+          </div>
+          <div class="category-card reveal" data-cat="tabaqueria" tabindex="0" role="button" aria-label="Ver categoría Tabaquería">
+            <div class="category-icon">🍃</div>
+            <div class="category-name">Tabaquería</div>
+            <div class="category-desc">Tabaco, accesorios y artículos premium</div>
+            <div class="category-link">Ver productos →</div>
+          </div>
+          <div class="category-card reveal" data-cat="aromas" tabindex="0" role="button" aria-label="Ver categoría Aromas">
+            <div class="category-icon">✨</div>
+            <div class="category-name">Aromas</div>
+            <div class="category-desc">Inciensos, difusores y fragancias</div>
+            <div class="category-link">Ver productos →</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRODUCTOS DESTACADOS ── -->
+    <section class="section-sm" aria-labelledby="feat-title" style="background:var(--bg-1)">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="feat-title">Destacados</h2>
+          <p>Nuestros productos más populares y recomendados.</p>
+        </div>
+        <div id="featured-grid" class="products-grid" aria-label="Productos destacados">
+          <!-- Renderizado por JS -->
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CATÁLOGO COMPLETO ── -->
+    <section id="products" class="section" aria-labelledby="cat-all-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="cat-all-title">Catálogo completo</h2>
+          <p>Filtra y encuentra exactamente lo que necesitas.</p>
+        </div>
+
+        <div class="products-toolbar reveal">
+          <!-- Buscador -->
+          <div class="search-wrap" style="flex:1;max-width:320px;">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input
+              id="search-input"
+              type="search"
+              placeholder="Buscar producto..."
+              aria-label="Buscar productos"
+              autocomplete="off"
+            >
+          </div>
+          <!-- Filtros por categoría -->
+          <div class="filter-tabs" role="group" aria-label="Filtrar por categoría">
+            <button class="filter-tab active" data-cat="all">Todos</button>
+            <button class="filter-tab" data-cat="smoke">🌿 Smoke</button>
+            <button class="filter-tab" data-cat="cultivo">🌱 Cultivo</button>
+            <button class="filter-tab" data-cat="tabaqueria">🍃 Tabaquería</button>
+            <button class="filter-tab" data-cat="aromas">✨ Aromas</button>
+          </div>
+        </div>
+
+        <div id="product-grid" class="products-grid" aria-label="Catálogo de productos" aria-live="polite">
+          <!-- Renderizado por JS -->
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+          <div class="skeleton" style="height:320px;border-radius:16px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MARCAS ── -->
+    <section id="brands" class="section-sm" style="background:var(--bg-1);" aria-labelledby="brands-title">
+      <div class="container">
+        <div class="section-header reveal text-center">
+          <h2 id="brands-title">Nuestras marcas</h2>
+          <p>Trabajamos con las mejores marcas del mercado.</p>
+        </div>
+        <div id="brands-list" class="brands-track reveal" role="list" aria-label="Marcas disponibles">
+          <!-- Renderizado por JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SOBRE NOSOTROS ── -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-visual reveal" aria-hidden="true">
+            <span style="position:relative;z-index:1;font-size:90px;">🌿</span>
+          </div>
+          <div class="about-text reveal">
+            <h2 id="about-title">Growshop local<br>con <em style="font-style:italic;color:var(--accent)">identidad propia</em></h2>
+            <p>Somos Piña GrowShop, una tienda ubicada en el corazón de Padre Hurtado. Llevamos años acompañando a nuestra comunidad con productos de calidad en las áreas de smoke, cultivo, tabaquería y aromas.</p>
+            <p>Nuestro equipo conoce cada producto que vendemos y está disponible para orientarte y responder todas tus preguntas.</p>
+            <div class="about-features">
+              <div class="about-feature">
+                <div class="about-feature-icon">✓</div>
+                <div class="about-feature-text">
+                  <h4>Productos seleccionados</h4>
+                  <p>Solo trabajamos con marcas y proveedores de confianza.</p>
+                </div>
+              </div>
+              <div class="about-feature">
+                <div class="about-feature-icon">✓</div>
+                <div class="about-feature-text">
+                  <h4>Atención personalizada</h4>
+                  <p>Te asesoramos por WhatsApp o en nuestra tienda física.</p>
+                </div>
+              </div>
+              <div class="about-feature">
+                <div class="about-feature-icon">✓</div>
+                <div class="about-feature-text">
+                  <h4>Tienda local</h4>
+                  <p>Padre Hurtado, San Marcos 1801. Ven a visitarnos.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CONTACTO ── -->
+    <section id="contact" class="section" style="background:var(--bg-1);" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="section-header reveal">
+          <h2 id="contact-title">Contáctanos</h2>
+          <p>Escríbenos por WhatsApp o encuéntranos en nuestra tienda.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-item reveal">
+              <div class="contact-item-icon">📍</div>
+              <div>
+                <h4>Dirección</h4>
+                <p>San Marcos 1801, Padre Hurtado</p>
+              </div>
+            </div>
+            <div class="contact-item reveal">
+              <div class="contact-item-icon">📱</div>
+              <div>
+                <h4>WhatsApp</h4>
+                <p><a href="https://wa.me/56945802810" target="_blank" rel="noopener">+56 9 4580 2810</a></p>
+              </div>
+            </div>
+            <div class="contact-item reveal">
+              <div class="contact-item-icon">📘</div>
+              <div>
+                <h4>Facebook</h4>
+                <p><a href="https://www.facebook.com/PinaGrowShop" target="_blank" rel="noopener">PinaGrowShop</a></p>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-full reveal" style="margin-top:8px;" onclick="openWhatsApp()">
+              💬 Escribir por WhatsApp
+            </button>
+          </div>
+          <div class="map-placeholder reveal" aria-label="Ubicación de la tienda en mapa">
+            <div class="map-icon">🗺️</div>
+            <p>San Marcos 1801<br>Padre Hurtado, Región Metropolitana</p>
+            <a href="https://maps.google.com/?q=San+Marcos+1801+Padre+Hurtado" target="_blank" rel="noopener" class="btn btn-outline btn-sm">
+              Ver en Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <footer id="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <div class="logo-text">🌿 Piña<span style="color:var(--accent)">Grow</span></div>
+          <p>Growshop local en Padre Hurtado. Smoke, cultivo, tabaquería y aromas. Calidad y atención personalizada desde la Región Metropolitana.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Categorías</h4>
+          <ul>
+            <li><a href="#products" onclick="setFilterFromFooter('smoke')">🌿 Smoke</a></li>
+            <li><a href="#products" onclick="setFilterFromFooter('cultivo')">🌱 Cultivo</a></li>
+            <li><a href="#products" onclick="setFilterFromFooter('tabaqueria')">🍃 Tabaquería</a></li>
+            <li><a href="#products" onclick="setFilterFromFooter('aromas')">✨ Aromas</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-contact">
+          <h4>Contacto</h4>
+          <ul>
+            <li>📍 San Marcos 1801, Padre Hurtado</li>
+            <li>📱 <a href="https://wa.me/56945802810">+56 9 4580 2810</a></li>
+            <li>📘 <a href="https://www.facebook.com/PinaGrowShop" target="_blank" rel="noopener">PinaGrowShop</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 Piña GrowShop · Todos los derechos reservados · Solo para mayores de 18 años</p>
+        <p>
+          Desarrollado por
+          <a href="https://www.instagram.com/cde.express" target="_blank" rel="noopener">
+            Centro Digital Express | CDE
+          </a>
+          &nbsp;·&nbsp;
+          <a href="https://www.instagram.com/cde.express" target="_blank" rel="noopener">
+            @cde.express
+          </a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════
+       CARRITO DRAWER
+  ══════════════════════════════════════════════════════ -->
+  <div id="cart-overlay" aria-hidden="true"></div>
+
+  <aside id="cart-drawer" role="complementary" aria-label="Carrito de compras" aria-hidden="true">
+    <div class="cart-header">
+      <h3>
+        Carrito
+        <span id="cart-item-count" class="cart-count"></span>
+      </h3>
+      <button id="cart-close" class="btn btn-ghost btn-icon" aria-label="Cerrar carrito">×</button>
+    </div>
+    <div id="cart-items" class="cart-items" aria-live="polite">
+      <!-- Renderizado por JS -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-summary total">
+        <span>Total</span>
+        <span id="cart-total">$0</span>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="openWhatsApp('Hola! Quiero hacer un pedido desde la tienda online.')">
+        💬 Pedir por WhatsApp
+      </button>
+      <button id="cart-clear" class="btn btn-ghost btn-full btn-sm">Vaciar carrito</button>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════════
+       BOTÓN WHATSAPP FLOTANTE
+  ══════════════════════════════════════════════════════ -->
+  <a id="whatsapp-btn" href="https://wa.me/56945802810" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">
+    💬
+  </a>
+
+  <!-- ══════════════════════════════════════════════════════
+       TOAST CONTAINER
+  ══════════════════════════════════════════════════════ -->
+  <div id="toast-container" aria-live="polite" role="status"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════════════════════ -->
+  <script>
+    // store.config.js inline (evita problema de módulos en file://)
+    const STORE_CONFIG = {
+      name: "Piña GrowShop",
+      contact: { whatsapp: "56945802810" },
+      whatsappMessage: "Hola! Me interesa un producto de Piña GrowShop."
+    };
+
+    // Filtrar desde footer
+    function setFilterFromFooter(cat) {
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    }
+  </script>
+  <script type="module" src="main.js"></script>
+
+</body>
+</html>
