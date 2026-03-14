@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piña GrowShop | Cultivo Indoor & Smoke</title>
+    <title>Piña GrowShop | Catálogo Oficial</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="tokens.css">
     <link rel="stylesheet" href="layout.css">
-    <link rel="stylesheet" href="components.css">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,6 +19,7 @@
                         primary: '#4caf50',
                         secondary: '#fdd835',
                         dark: '#0a0f0b',
+                        card: '#111a13'
                     }
                 }
             }
@@ -27,112 +27,116 @@
     </script>
 </head>
 
-<body class="bg-dark text-white font-['Inter']">
+<body class="bg-dark text-white font-['Inter'] antialiased">
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30 pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary rounded-full blur-[100px] opacity-40"></div>
+    <div class="fixed inset-0 overflow-hidden -z-10 opacity-20 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-primary rounded-full blur-[130px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary rounded-full blur-[110px]"></div>
     </div>
 
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-[rgba(10,15,11,0.7)] border-b border-[rgba(255,255,255,0.1)]">
-        <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
-            <h1 class="text-2xl font-['Fredoka'] font-bold text-primary flex items-center gap-2">
-                <span>🍍</span> Piña GrowShop
-            </h1>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#productos" class="hover:text-secondary transition-colors">PRODUCTOS</a>
-                <a href="#nosotros" class="hover:text-secondary transition-colors">NOSOTROS</a>
-                <a href="#contacto" class="hover:text-secondary transition-colors">CONTACTO</a>
+    <header class="sticky top-0 z-50 backdrop-blur-xl bg-dark/70 border-b border-white/5">
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+            <h1 class="text-2xl font-['Fredoka'] font-bold text-primary tracking-tight">🍍 Piña Grow</h1>
+            
+            <nav class="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest text-gray-400">
+                <a href="#catalogo" class="hover:text-primary transition-colors">CATÁLOGO</a>
+                <a href="#nosotros" class="hover:text-primary transition-colors">NOSOTROS</a>
+                <a href="admin.html" class="opacity-50 hover:opacity-100">ADMIN</a>
             </nav>
-            <a href="https://wa.me/56900000000" class="bg-primary text-black px-4 py-2 rounded-full font-bold text-xs hover:scale-105 transition-transform">
-                WHATSAPP
+
+            <a href="https://wa.me/56945802810" class="bg-primary text-black px-5 py-2.5 rounded-full font-bold text-xs shadow-lg shadow-primary/20 hover:scale-105 transition-transform">
+                CONTACTO
             </a>
         </div>
     </header>
 
-    <section class="relative py-24 px-4 overflow-hidden">
-        <div class="max-w-5xl mx-auto text-center relative z-10">
-            <span class="inline-block bg-[rgba(76,175,80,0.1)] text-primary px-4 py-1 rounded-full text-xs font-bold mb-4 border border-primary/20">
-                TODO PARA TU CULTIVO
-            </span>
-            <h2 class="text-5xl md:text-7xl font-['Fredoka'] font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent leading-tight">
-                Potencia tu <br><span class="text-secondary">Cultivo Indoor</span>
-            </h2>
-            <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-                Fertilizantes, semillas, iluminación y accesorios de nivel profesional para cultivadores exigentes en Chile.
-            </p>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="#productos" class="bg-primary text-black px-8 py-4 rounded-2xl font-bold shadow-[0_0_20px_rgba(76,175,80,0.3)] hover:shadow-primary/50 transition-all">
-                    Explorar Catálogo
-                </a>
-                <a href="#nosotros" class="bg-white/5 border border-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
-                    Sobre Nosotros
-                </a>
-            </div>
+    <section class="pt-20 pb-10 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-5xl md:text-7xl font-['Fredoka'] font-bold mb-6">Tu cosecha, <br><span class="text-secondary">nuestra pasión.</span></h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-10">Explora nuestro inventario actualizado de parafernalia, nutrición y accesorios para el cultivador moderno.</p>
         </div>
     </section>
 
-    <section id="productos" class="max-w-6xl mx-auto py-20 px-4">
-        <div class="flex justify-between items-end mb-12">
-            <div>
-                <h3 class="text-3xl font-['Fredoka'] font-bold">Destacados</h3>
-                <div class="w-12 h-1 bg-primary mt-2"></div>
+    <section id="catalogo" class="max-w-7xl mx-auto px-4 py-12">
+        
+        <div class="flex flex-col md:flex-row gap-6 justify-between items-center mb-12 bg-card/50 p-6 rounded-[2rem] border border-white/5 shadow-2xl">
+            <div class="flex flex-wrap justify-center gap-2" id="filter-buttons">
+                <button onclick="filterBy('all')" class="cat-btn active bg-primary text-black px-6 py-2.5 rounded-full text-xs font-bold transition-all">TODOS</button>
+                <button onclick="filterBy('smoke')" class="cat-btn bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-full text-xs font-bold transition-all">SMOKE</button>
+                <button onclick="filterBy('cultivo')" class="cat-btn bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-full text-xs font-bold transition-all">CULTIVO</button>
+                <button onclick="filterBy('aromas')" class="cat-btn bg-white/5 hover:bg-white/10 px-6 py-2.5 rounded-full text-xs font-bold transition-all">AROMAS</button>
+            </div>
+            
+            <div class="relative w-full md:w-72">
+                <input type="text" id="user-search" onkeyup="searchHandler(this.value)" placeholder="Buscar producto..." 
+                    class="w-full bg-black/40 border border-white/10 rounded-2xl py-3 px-5 text-sm outline-none focus:border-primary transition-all">
             </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="group bg-[#141b15] border border-white/5 p-8 rounded-[2rem] hover:border-primary/50 transition-all duration-500">
-                <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:scale-110 transition-transform">
-                    🧪
-                </div>
-                <h4 class="text-xl font-bold mb-3">Fertilizantes</h4>
-                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                    Nutrición completa diseñada para maximizar el crecimiento y la floración de tus plantas.
-                </p>
-                <button class="w-full py-3 rounded-xl bg-white/5 font-bold group-hover:bg-primary group-hover:text-black transition-all">
-                    Consultar
-                </button>
-            </div>
+        <div class="flex justify-between items-center mb-6 px-2">
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Mostrando: <span id="items-count" class="text-primary">0</span> productos</span>
+        </div>
 
-            <div class="group bg-[#141b15] border border-white/5 p-8 rounded-[2rem] hover:border-secondary/50 transition-all duration-500">
-                <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary text-2xl mb-6 group-hover:scale-110 transition-transform">
-                    💡
-                </div>
-                <h4 class="text-xl font-bold mb-3">Iluminación LED</h4>
-                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                    Sistemas de alta eficiencia energética para un rendimiento profesional en carpas indoor.
-                </p>
-                <button class="w-full py-3 rounded-xl bg-white/5 font-bold group-hover:bg-secondary group-hover:text-black transition-all">
-                    Consultar
-                </button>
-            </div>
-
-            <div class="group bg-[#141b15] border border-white/5 p-8 rounded-[2rem] hover:border-primary/50 transition-all duration-500">
-                <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:scale-110 transition-transform">
-                    🌱
-                </div>
-                <h4 class="text-xl font-bold mb-3">Semillas</h4>
-                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                    Genéticas seleccionadas y garantizadas de los mejores bancos para resultados premium.
-                </p>
-                <button class="w-full py-3 rounded-xl bg-white/5 font-bold group-hover:bg-primary group-hover:text-black transition-all">
-                    Consultar
-                </button>
-            </div>
+        <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="col-span-full py-20 text-center text-gray-500 italic">Cargando catálogo oficial...</div>
         </div>
     </section>
 
-    <footer class="border-t border-white/5 py-12 bg-black/30">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <h2 class="font-['Fredoka'] text-2xl mb-4">🍍 Piña GrowShop</h2>
-            <p class="text-gray-500 text-sm mb-8">Expertos en cultivo indoor y parafernalia.</p>
-            <div class="flex justify-center gap-6 mb-8 text-gray-400">
-                <a href="#" class="hover:text-primary transition-colors">Instagram</a>
-                <a href="#" class="hover:text-primary transition-colors">Facebook</a>
+    <footer class="border-t border-white/5 py-16 mt-20 bg-black/20">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            <div class="text-3xl font-['Fredoka'] font-bold text-white mb-4">🍍 Piña GrowShop</div>
+            <p class="text-gray-500 text-sm mb-8 text-center max-w-md">San Marcos 1801, Padre Hurtado. <br> Calidad premium en cada detalle para tu cultivo.</p>
+            <div class="flex gap-6 mb-10">
+                <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-primary transition-colors text-xl">📸</a>
+                <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-primary transition-colors text-xl">📘</a>
             </div>
-            <p class="text-xs text-gray-600">© 2026 Piña GrowShop · Santiago, Chile</p>
+            <p class="text-[10px] text-gray-700 uppercase tracking-[0.3em]">© 2026 Piña GrowShop · Chile</p>
         </div>
     </footer>
 
+    <script type="module">
+        import { fetchProducts, renderProducts } from './products.js';
+
+        let allProducts = [];
+
+        async function init() {
+            allProducts = await fetchProducts();
+            updateGrid(allProducts);
+        }
+
+        function updateGrid(list) {
+            renderProducts(list, 'productos-grid');
+            document.getElementById('items-count').textContent = list.length;
+        }
+
+        // Exponer funciones al window para los onclick del HTML
+        window.filterBy = (cat) => {
+            // Actualizar botones UI
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-black');
+                btn.classList.add('bg-white/5', 'text-white');
+            });
+            event.target.classList.add('bg-primary', 'text-black');
+            event.target.classList.remove('bg-white/5', 'text-white');
+
+            if(cat === 'all') {
+                updateGrid(allProducts);
+            } else {
+                const filtered = allProducts.filter(p => p.category === cat);
+                updateGrid(filtered);
+            }
+        };
+
+        window.searchHandler = (query) => {
+            const q = query.toLowerCase();
+            const filtered = allProducts.filter(p => 
+                p.name.toLowerCase().includes(q) || 
+                p.category.toLowerCase().includes(q)
+            );
+            updateGrid(filtered);
+        };
+
+        init();
+    </script>
 </body>
 </html>
