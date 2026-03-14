@@ -1,145 +1,138 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Piña GrowShop | Cultivo Indoor</title>
-<meta name="description" content="Growshop especializado en cultivo indoor, fertilizantes, semillas y accesorios.">
-
-<script src="https://cdn.tailwindcss.com"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piña GrowShop | Cultivo Indoor & Smoke</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4caf50',
+                        secondary: '#fdd835',
+                        dark: '#0a0f0b',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body class="bg-gray-100 font-sans">
+<body class="bg-dark text-white font-['Inter']">
 
-<!-- NAVBAR -->
-<header class="bg-green-700 text-white shadow">
-<div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-30 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-secondary rounded-full blur-[100px] opacity-40"></div>
+    </div>
 
-<h1 class="text-2xl font-bold">🍍 Piña GrowShop</h1>
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-[rgba(10,15,11,0.7)] border-b border-[rgba(255,255,255,0.1)]">
+        <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+            <h1 class="text-2xl font-['Fredoka'] font-bold text-primary flex items-center gap-2">
+                <span>🍍</span> Piña GrowShop
+            </h1>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#productos" class="hover:text-secondary transition-colors">PRODUCTOS</a>
+                <a href="#nosotros" class="hover:text-secondary transition-colors">NOSOTROS</a>
+                <a href="#contacto" class="hover:text-secondary transition-colors">CONTACTO</a>
+            </nav>
+            <a href="https://wa.me/56900000000" class="bg-primary text-black px-4 py-2 rounded-full font-bold text-xs hover:scale-105 transition-transform">
+                WHATSAPP
+            </a>
+        </div>
+    </header>
 
-<nav class="space-x-6">
-<a href="#productos" class="hover:underline">Productos</a>
-<a href="#nosotros" class="hover:underline">Nosotros</a>
-<a href="#contacto" class="hover:underline">Contacto</a>
-</nav>
+    <section class="relative py-24 px-4 overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <span class="inline-block bg-[rgba(76,175,80,0.1)] text-primary px-4 py-1 rounded-full text-xs font-bold mb-4 border border-primary/20">
+                TODO PARA TU CULTIVO
+            </span>
+            <h2 class="text-5xl md:text-7xl font-['Fredoka'] font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent leading-tight">
+                Potencia tu <br><span class="text-secondary">Cultivo Indoor</span>
+            </h2>
+            <p class="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+                Fertilizantes, semillas, iluminación y accesorios de nivel profesional para cultivadores exigentes en Chile.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#productos" class="bg-primary text-black px-8 py-4 rounded-2xl font-bold shadow-[0_0_20px_rgba(76,175,80,0.3)] hover:shadow-primary/50 transition-all">
+                    Explorar Catálogo
+                </a>
+                <a href="#nosotros" class="bg-white/5 border border-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl font-bold hover:bg-white/10 transition-all">
+                    Sobre Nosotros
+                </a>
+            </div>
+        </div>
+    </section>
 
-</div>
-</header>
+    <section id="productos" class="max-w-6xl mx-auto py-20 px-4">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <h3 class="text-3xl font-['Fredoka'] font-bold">Destacados</h3>
+                <div class="w-12 h-1 bg-primary mt-2"></div>
+            </div>
+        </div>
 
-<!-- HERO -->
-<section class="bg-green-600 text-white py-20">
-<div class="max-w-5xl mx-auto text-center">
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="group bg-[#141b15] border border-white/5 p-8 rounded-[2rem] hover:border-primary/50 transition-all duration-500">
+                <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    🧪
+                </div>
+                <h4 class="text-xl font-bold mb-3">Fertilizantes</h4>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    Nutrición completa diseñada para maximizar el crecimiento y la floración de tus plantas.
+                </p>
+                <button class="w-full py-3 rounded-xl bg-white/5 font-bold group-hover:bg-primary group-hover:text-black transition-all">
+                    Consultar
+                </button>
+            </div>
 
-<h2 class="text-4xl font-bold mb-4">
-Todo para tu cultivo indoor
-</h2>
+            <div class="group bg-[#141b15] border border-white/5 p-8 rounded-[2rem] hover:border-secondary/50 transition-all duration-500">
+                <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    💡
+                </div>
+                <h4 class="text-xl font-bold mb-3">Iluminación LED</h4>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    Sistemas de alta eficiencia energética para un rendimiento profesional en carpas indoor.
+                </p>
+                <button class="w-full py-3 rounded-xl bg-white/5 font-bold group-hover:bg-secondary group-hover:text-black transition-all">
+                    Consultar
+                </button>
+            </div>
 
-<p class="text-lg mb-6">
-Fertilizantes, semillas, iluminación y accesorios para cultivadores.
-</p>
+            <div class="group bg-[#141b15] border border-white/5 p-8 rounded-[2rem] hover:border-primary/50 transition-all duration-500">
+                <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary text-2xl mb-6 group-hover:scale-110 transition-transform">
+                    🌱
+                </div>
+                <h4 class="text-xl font-bold mb-3">Semillas</h4>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    Genéticas seleccionadas y garantizadas de los mejores bancos para resultados premium.
+                </p>
+                <button class="w-full py-3 rounded-xl bg-white/5 font-bold group-hover:bg-primary group-hover:text-black transition-all">
+                    Consultar
+                </button>
+            </div>
+        </div>
+    </section>
 
-<a href="#productos"
-class="bg-white text-green-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200">
-Ver productos
-</a>
-
-</div>
-</section>
-
-<!-- PRODUCTOS -->
-<section id="productos" class="max-w-6xl mx-auto py-16 px-4">
-
-<h3 class="text-3xl font-bold text-center mb-10">
-Productos destacados
-</h3>
-
-<div class="grid md:grid-cols-3 gap-8">
-
-<div class="bg-white shadow rounded-xl p-6">
-<h4 class="text-xl font-bold mb-2">Fertilizantes</h4>
-<p class="text-gray-600 mb-4">
-Nutrición completa para crecimiento y floración.
-</p>
-<button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-Consultar
-</button>
-</div>
-
-<div class="bg-white shadow rounded-xl p-6">
-<h4 class="text-xl font-bold mb-2">Iluminación LED</h4>
-<p class="text-gray-600 mb-4">
-Luces eficientes para cultivos indoor profesionales.
-</p>
-<button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-Consultar
-</button>
-</div>
-
-<div class="bg-white shadow rounded-xl p-6">
-<h4 class="text-xl font-bold mb-2">Semillas</h4>
-<p class="text-gray-600 mb-4">
-Genéticas seleccionadas para cultivadores exigentes.
-</p>
-<button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-Consultar
-</button>
-</div>
-
-</div>
-
-</section>
-
-<!-- NOSOTROS -->
-<section id="nosotros" class="bg-white py-16">
-
-<div class="max-w-5xl mx-auto px-4 text-center">
-
-<h3 class="text-3xl font-bold mb-6">
-Sobre nosotros
-</h3>
-
-<p class="text-gray-700 leading-relaxed">
-En Piña GrowShop ofrecemos productos para cultivo indoor,
-asesorando tanto a principiantes como a cultivadores avanzados.
-Nuestro objetivo es entregar herramientas y conocimiento
-para lograr cultivos saludables y productivos.
-</p>
-
-</div>
-
-</section>
-
-<!-- CONTACTO -->
-<section id="contacto" class="max-w-5xl mx-auto py-16 px-4 text-center">
-
-<h3 class="text-3xl font-bold mb-6">
-Contacto
-</h3>
-
-<p class="text-gray-600 mb-6">
-¿Necesitas asesoría o cotizar productos?
-</p>
-
-<a href="https://wa.me/56900000000"
-class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700">
-Hablar por WhatsApp
-</a>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-gray-900 text-gray-400 py-6">
-
-<div class="max-w-6xl mx-auto text-center text-sm">
-
-<p>© 2026 Piña GrowShop</p>
-<p>Santiago, Chile</p>
-
-</div>
-
-</footer>
+    <footer class="border-t border-white/5 py-12 bg-black/30">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <h2 class="font-['Fredoka'] text-2xl mb-4">🍍 Piña GrowShop</h2>
+            <p class="text-gray-500 text-sm mb-8">Expertos en cultivo indoor y parafernalia.</p>
+            <div class="flex justify-center gap-6 mb-8 text-gray-400">
+                <a href="#" class="hover:text-primary transition-colors">Instagram</a>
+                <a href="#" class="hover:text-primary transition-colors">Facebook</a>
+            </div>
+            <p class="text-xs text-gray-600">© 2026 Piña GrowShop · Santiago, Chile</p>
+        </div>
+    </footer>
 
 </body>
 </html>
